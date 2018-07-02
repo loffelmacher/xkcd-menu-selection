@@ -4,7 +4,7 @@ class MenuChooser
   def initialize(file)
     @targetPrice = 0
     @menuItems = parseData(file)
-    puts "target price: #{@targetPrice}"
+    # puts "target price: #{@targetPrice}"
     @selectedItems = []
     @hasSelected = false
   end
@@ -24,7 +24,7 @@ class MenuChooser
 
     price = 0
     @selectedItems.each do |item|
-      puts "item: #{item}"
+      # puts "item: #{item}"
       price += item[1]
     end
     price
