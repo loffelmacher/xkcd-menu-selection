@@ -5,7 +5,8 @@ class MenuChooser
     @targetPrice = 0
     @menuItems = parseData(file)
     # puts "target price: #{@targetPrice}"
-    @selectedItems = []
+    # puts "Menu items: #{@menuItems}"
+    @selectedItems = {}
     @hasSelected = false # TODO: add ? to end of this property name. problem is b/c this has a getter
   end
 
@@ -29,16 +30,21 @@ class MenuChooser
     # then all with 2 items
     # then all with 3 items
     # and so on...
-    for rr in (0...@menuItems.length)
-      @selectedItems = []
-      for nn in (0...@menuItems.length)
+    puts "The length of menuItems is: #{@menuItems.length()}"
+    for rr in (1...@menuItems.length)
+      @selectedItems = {}
+      for nn in (1...@menuItems.length)
         # if we pick only from the set allowed 
         # by the items in the outer loop
         # that will close up this logic
 
 
         # check if it's already in there, otherwise push
-        @selectedItems.push(@menuItems[nn-1])
+        # @selectedItems.push(@menuItems[n-1])
+        puts "The item at #{nn-1} is: #{@menuItems.keys()[nn-1]}"
+        # puts "The key here is: #{@menuItems[nn-1].key()}"
+        key = @menuItems.keys()[nn-1]
+        @selectedItems[key] = @menuItems[key]
       end
 
       puts "Checking price for: #{@selectedItems}"
@@ -52,18 +58,16 @@ class MenuChooser
   end
 
   def parseData(filePath="")
-    items = []
+    items = {}
     if File.exists? filePath
       lineNum = 0
       File.readlines(filePath).each do |line| # TODO; a bit ugly, refactor
         if lineNum == 0
           @targetPrice = dollar_to_number(line)
         else
-          item = line.strip().split(",")
-          items.push([
-            item[0], 
-            dollar_to_number(item[1])
-          ])
+          line = line.strip().split(",")
+          # s
+          items[line[0]] = dollar_to_number(line[1])
         end
         lineNum += 1
       end
@@ -79,9 +83,11 @@ class MenuChooser
 
   def scoreCombo()
     price = 0
-    @selectedItems.each do |item|
+    @selectedItems.each do |key,val|
       # puts "item: #{item}"
-      price += item[1]
+      if !val.nil? 
+        price += val
+      end
     end
     price    
   end
