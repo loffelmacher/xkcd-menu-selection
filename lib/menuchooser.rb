@@ -34,13 +34,15 @@ class MenuChooser
     # then all with 3 items
     # and so on...
     keys = @menuItems.keys()
-    for rr in (0..keys.length)
+    puts "Keys: #{keys} is of length #{keys.length}"
+    for rr in (0..keys.length-1)
+      puts "rr is: #{rr}"
       key = keys[rr-1]
       @selectedItems = {}
       @selectedItems[key] = @menuItems[key]
       # need to test if this solves it
       puts "Checking: #{@selectedItems} OUTER"
-      for nn in (1..keys.length)
+      for nn in (1..keys.length-1)
         key = keys[nn-1] # will repeat but to our advantage
         @selectedItems[key] = @menuItems[key]
         puts "Checking: #{@selectedItems}"
