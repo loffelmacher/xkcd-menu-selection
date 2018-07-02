@@ -35,11 +35,46 @@ class MenuChooser
   #
   # n! / r! * (n-r)! - number of combinations
   #
-  # 6! / r! * (6 - r)! # 720 different ways to choose
+  # n: 3, r=3: 1
+  # n: 3, r=2: 3
+  # n: 3, r-1: 3
+  # n: 3, r=0: 1
   #
+  # 8 possible solutions
+  #
+  # I need the SUM of that at r, r-1, r-2..r-n
+#
+#
+# ALL POSSIBLE COMBOS. Think of it as a string of symbols
+#
+# 1. ABC
+# 2. AB
+# 3. AC
+# 4. BC
+# 5. A
+# 6. B
+# 7. C
+# 8. Choose None
+#
   def select()
     # here we could kick off the selection algo immediately
     @selectedItems = @menuItems
+
+    # loop through r, descending (so i get the most items)
+    for rr in (@selectedItems.length...0)
+      
+      for nn in (0...@selectedItems.length)
+
+      end
+    end
+
+    # @selectedItems.foreach do |outer|
+    #   @selectedItems.foreach do |inner|
+
+    #   end
+    # end
+
+
     @hasSelected = true
   end
 
