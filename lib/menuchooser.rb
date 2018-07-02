@@ -25,7 +25,7 @@ class MenuChooser
   private
 
   def select()
-
+    # n^2 + 1 total combos, BEFORE eliminating duplicate sets
 
 
     # puts "Entering select()"
@@ -34,21 +34,30 @@ class MenuChooser
     # then all with 3 items
     # and so on...
     keys = @menuItems.keys()
-    puts "Keys: #{keys} is of length #{keys.length}"
-    for rr in (0..keys.length-1)
-      puts "rr is: #{rr}"
-      key = keys[rr-1]
+    # puts "Keys: #{keys} is of length #{keys.length}"
+
+    # prd = keys.product(keys)
+    # puts "THe product is: #{prd}"
+    iterations = 0
+    for ii in (0..keys.length-1)
+      key = keys[ii-1]
       @selectedItems = {}
-      @selectedItems[key] = @menuItems[key]
-      # need to test if this solves it
-      puts "Checking: #{@selectedItems} OUTER"
-      for nn in (1..keys.length-1)
-        key = keys[nn-1] # will repeat but to our advantage
+
+      @selectedItems[key] = @menuItems[key] # check for win condition?
+
+      # puts "Checking: #{@selectedItems.keys()} OUTER"
+
+      for jj in (0..keys.length-1)
+        # i'm no longer interested in what happens in outer loop b/c 
+        # the number of runs here is going to be ii*jj no matter what
+        # i think i need to clear this out
+
+
+
+        key = keys[jj-1] # will repeat but to our advantage
         @selectedItems[key] = @menuItems[key]
-        puts "Checking: #{@selectedItems}"
-        # if scoreCombo() == @targetPrice
-        #   # break
-        # end
+        puts "Checking: #{@selectedItems.keys()} INNER" # check for win condition after
+        iterations = iterations + 1
       end
 
       # handle the corner cases here maybe
@@ -59,6 +68,7 @@ class MenuChooser
 
       # additional checks will be needed here
     end
+    puts "Iterations: #{iterations}"
     @hasSelected = true
   end
 
