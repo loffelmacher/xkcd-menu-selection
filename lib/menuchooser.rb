@@ -1,15 +1,13 @@
-require 'csv'
+# require 'io'
 
 class MenuChooser
-  def initialize()
-    @targetPrice = 15.05
-    @menuItems = [['Apple', 5], ['Banana', 5], ['Cherry', 5.05]]
+  def initialize(file)
+    puts "Entering init with #{file}!"
+    @targetPrice = 999
+    @menuItems = parseData(file)
+    # puts "Now targetPrice is #{@targetPrice}"
     @selectedItems = @menuItems
-    @solved
-  end
-
-  def choose()
-    # here we could kick off the selection algo immediately
+    @solved = false # greedy and nothing elses
   end
 
   def selectedItems
@@ -23,7 +21,7 @@ class MenuChooser
   def totalPrice
     price = 0
     @selectedItems.each do |item|
-      # puts "This item is #{item}"
+      puts "This item is #{item}"
       price += item[1]
     end
     price
@@ -31,21 +29,41 @@ class MenuChooser
 
   private
 
-#
-# n! / r! * (n-r)! - number of combinations
-#
-# 6! / r! * (6 - r)! # 720 different ways to choose
-#
+  #
+  # n! / r! * (n-r)! - number of combinations
+  #
+  # 6! / r! * (6 - r)! # 720 different ways to choose
+  #
+  def choose()
+    # here we could kick off the selection algo immediately
+  end
 
-#
-#
-#
-  # Ruby will store each table row as an array, 
-  # with each cell being a string element of the array.
-#
-#
-#
-  # def parseData(filePath)
-  #   CSV.read('customers.csv')
-  # end
+  def parseData(filePath="")
+    items = []
+    if File.exists? filePath
+      lineNum = 0
+      File.readlines(filePath).each do |line|
+        # puts "#{lineNum}: #{line}"
+        if lineNum == 0
+          @targetPrice = dollar_to_number(line)
+        else
+          item = line.strip().split(",")
+          # puts "Item cost is: #{item[1]}"
+          items.push([
+            item[0], 
+            dollar_to_number(item[1])
+          ])
+        end
+        lineNum += 1
+      end
+    end
+    items
+  end
+
+  def dollar_to_number(dollarPrice)
+    if dollarPrice
+      # TODO: call a func here to trim this down to 2 digits
+      dollarPrice[1, dollarPrice.length].to_f
+    end
+  end
 end
