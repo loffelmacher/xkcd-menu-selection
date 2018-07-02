@@ -1,0 +1,4 @@
+$15.05
+Apples,$5
+Bananas,$5
+Cherries,$5.05
