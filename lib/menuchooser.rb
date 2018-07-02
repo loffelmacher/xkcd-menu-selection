@@ -25,34 +25,37 @@ class MenuChooser
   private
 
   def select()
+
+
+
     # puts "Entering select()"
     # try all combos that include 1 item
     # then all with 2 items
     # then all with 3 items
     # and so on...
-    puts "The length of menuItems is: #{@menuItems.length()}"
-    for rr in (1...@menuItems.length)
+    keys = @menuItems.keys()
+    for rr in (0..keys.length)
+      key = keys[rr-1]
       @selectedItems = {}
-      for nn in (1...@menuItems.length)
-        # if we pick only from the set allowed 
-        # by the items in the outer loop
-        # that will close up this logic
-
-
-        # check if it's already in there, otherwise push
-        # @selectedItems.push(@menuItems[n-1])
-        puts "The item at #{nn-1} is: #{@menuItems.keys()[nn-1]}"
-        # puts "The key here is: #{@menuItems[nn-1].key()}"
-        key = @menuItems.keys()[nn-1]
+      @selectedItems[key] = @menuItems[key]
+      # need to test if this solves it
+      puts "Checking: #{@selectedItems} OUTER"
+      for nn in (1..keys.length)
+        key = keys[nn-1] # will repeat but to our advantage
         @selectedItems[key] = @menuItems[key]
+        puts "Checking: #{@selectedItems}"
+        # if scoreCombo() == @targetPrice
+        #   # break
+        # end
       end
 
-      puts "Checking price for: #{@selectedItems}"
+      # handle the corner cases here maybe
+
+      # if scoreCombo() == @targetPrice
+      #   # break
+      # end
 
       # additional checks will be needed here
-      if scoreCombo() == @targetPrice
-        break
-      end
     end
     @hasSelected = true
   end
