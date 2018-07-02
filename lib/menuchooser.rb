@@ -2,19 +2,29 @@
 
 class MenuChooser
   def initialize(file)
-    puts "Entering init with #{file}!"
-    @targetPrice = 999
+    @targetPrice = 0
     @menuItems = parseData(file)
-    @selectedItems = @menuItems
+    puts "target price: #{@targetPrice}"
+    @selectedItems = []
+    @hasSelected = false
   end
 
   def selectedItems
+    # if not @hasSelected and @targetPrice
+    if not @hasSelected 
+      select()
+    end
     @selectedItems
   end
 
   def totalPrice
+    if not @hasSelected 
+      select()
+    end
+
     price = 0
     @selectedItems.each do |item|
+      puts "item: #{item}"
       price += item[1]
     end
     price
@@ -27,8 +37,10 @@ class MenuChooser
   #
   # 6! / r! * (6 - r)! # 720 different ways to choose
   #
-  def choose()
+  def select()
     # here we could kick off the selection algo immediately
+    @selectedItems = @menuItems
+    @hasSelected = true
   end
 
   def parseData(filePath="")
