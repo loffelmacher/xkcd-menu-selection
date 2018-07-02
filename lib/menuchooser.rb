@@ -6,75 +6,48 @@ class MenuChooser
     @menuItems = parseData(file)
     # puts "target price: #{@targetPrice}"
     @selectedItems = []
-    @hasSelected = false
+    @hasSelected = false # TODO: add ? to end of this property name. problem is b/c this has a getter
   end
 
   def selectedItems
-    # if not @hasSelected and @targetPrice
-    if not @hasSelected 
+    if not @hasSelected # TODO: add `and @targetPrice`
       select()
     end
     @selectedItems
   end
 
   def totalPrice
-    if not @hasSelected 
-      select()
-    end
-
-    price = 0
-    @selectedItems.each do |item|
-      # puts "item: #{item}"
-      price += item[1]
-    end
-    price
+    # TODO: put in an ensure/rescue here
+    scoreCombo()
   end
 
   private
 
-  #
-  # n! / r! * (n-r)! - number of combinations
-  #
-  # n: 3, r=3: 1
-  # n: 3, r=2: 3
-  # n: 3, r-1: 3
-  # n: 3, r=0: 1
-  #
-  # 8 possible solutions
-  #
-  # I need the SUM of that at r, r-1, r-2..r-n
-#
-#
-# ALL POSSIBLE COMBOS. Think of it as a string of symbols
-#
-# 1. ABC
-# 2. AB
-# 3. AC
-# 4. BC
-# 5. A
-# 6. B
-# 7. C
-# 8. Choose None
-#
   def select()
-    # here we could kick off the selection algo immediately
-    @selectedItems = @menuItems
+    # puts "Entering select()"
+    # try all combos that include 1 item
+    # then all with 2 items
+    # then all with 3 items
+    # and so on...
+    for rr in (0...@menuItems.length)
+      @selectedItems = []
+      for nn in (0...@menuItems.length)
+        # if we pick only from the set allowed 
+        # by the items in the outer loop
+        # that will close up this logic
 
-    # loop through r, descending (so i get the most items)
-    for rr in (@selectedItems.length...0)
-      
-      for nn in (0...@selectedItems.length)
 
+        # check if it's already in there, otherwise push
+        @selectedItems.push(@menuItems[nn-1])
+      end
+
+      puts "Checking price for: #{@selectedItems}"
+
+      # additional checks will be needed here
+      if scoreCombo() == @targetPrice
+        break
       end
     end
-
-    # @selectedItems.foreach do |outer|
-    #   @selectedItems.foreach do |inner|
-
-    #   end
-    # end
-
-
     @hasSelected = true
   end
 
@@ -82,7 +55,7 @@ class MenuChooser
     items = []
     if File.exists? filePath
       lineNum = 0
-      File.readlines(filePath).each do |line|
+      File.readlines(filePath).each do |line| # TODO; a bit ugly, refactor
         if lineNum == 0
           @targetPrice = dollar_to_number(line)
         else
@@ -102,5 +75,14 @@ class MenuChooser
     if dollarPrice
       dollarPrice[1, dollarPrice.length].to_f
     end
+  end
+
+  def scoreCombo()
+    price = 0
+    @selectedItems.each do |item|
+      # puts "item: #{item}"
+      price += item[1]
+    end
+    price    
   end
 end
