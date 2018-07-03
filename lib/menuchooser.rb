@@ -18,7 +18,7 @@ class MenuChooser
   end
 
   private
-    
+  
   def select()
     keys = @menuItems.keys()
     combo = []
