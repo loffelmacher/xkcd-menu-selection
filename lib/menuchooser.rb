@@ -6,7 +6,7 @@ class MenuChooser
   def initialize(file)
     @targetPrice = 0
     @menuItems = parseData(file)
-    @selectedItems = {}
+    @selectedItems = []
     @hasSelected = false
   end
 
@@ -30,7 +30,6 @@ class MenuChooser
     combo.each do |possibleSolution|
       total = tally(possibleSolution)
       if total == @targetPrice
-        puts "WINNER WINNER CHICKEN DINNER: #{possibleSolution}"
         @selectedItems = possibleSolution
         return @selectedItems
       end
@@ -70,3 +69,8 @@ class MenuChooser
     items
   end
 end
+
+# def main() 
+#   puts "Hello there!!!"
+#   # spec/support/examples.txt
+# end
