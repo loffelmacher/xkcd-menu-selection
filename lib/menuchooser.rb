@@ -1,9 +1,13 @@
-# require 'io'
+require 'bigdecimal'
+require 'money'
+
+I18n.config.available_locales = :en
 
 class MenuChooser
   def initialize(file)
     @targetPrice = 0
     @menuItems = parseData(file)
+    # puts "Target price: #{@targetPrice}"
     @selectedItems = {}
     @hasSelected = false # TODO: add ? to end of this property name. problem is b/c this has a getter
   end
@@ -35,10 +39,10 @@ class MenuChooser
     # puts "Combo [#{combo.length}]: #{combo}"
 
     combo.each do |possibleSolution|
-      # puts "Solution: #{possibleSolution}"
-      ss = scoreCombo2(possibleSolution)
-      if ss == @targetPrice
-        puts "WINNER WINNER CHICKEN DINNER"
+      total = tally(possibleSolution)
+      puts "Price #{total}: #{possibleSolution}"
+      if total == @targetPrice
+        puts "WINNER WINNER CHICKEN DINNER #{possibleSolution}"
         @selectedItems = possibleSolution
         return @selectedItems
       end
@@ -48,9 +52,9 @@ class MenuChooser
   end
 
   def dollar_to_number(dollarPrice)
-    if dollarPrice
-      dollarPrice[1, dollarPrice.length].to_f
-    end
+    asStr = dollarPrice[1, dollarPrice.length]
+    puts asStr
+    Money.new(asStr, "USD") #TODO: more terse?
   end
 
   def scoreCombo()
@@ -64,14 +68,14 @@ class MenuChooser
     price    
   end
 
-  def scoreCombo2(solution)
+  def tally(solution)
     price = 0
     solution.each do |key|
       # puts "key: #{key}"
       # puts "adding: #{@menuItems[key]}"
       price += @menuItems[key]
     end
-    puts "#{price} for #{solution}"
+    # puts "#{price} for #{solution}"
     price
   end
 
@@ -86,7 +90,7 @@ class MenuChooser
         else
           line = line.strip().split(",")
           # s
-          items[line[0]] = dollar_to_number(line[1])
+          items[line[0]] = dollar_to_number(line[1].strip())
         end
         lineNum += 1
       end
