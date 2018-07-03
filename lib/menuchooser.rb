@@ -4,8 +4,6 @@ class MenuChooser
   def initialize(file)
     @targetPrice = 0
     @menuItems = parseData(file)
-    # puts "target price: #{@targetPrice}"
-    # puts "Menu items: #{@menuItems}"
     @selectedItems = {}
     @hasSelected = false # TODO: add ? to end of this property name. problem is b/c this has a getter
   end
@@ -37,7 +35,7 @@ class MenuChooser
     # puts "Combo [#{combo.length}]: #{combo}"
 
     combo.each do |possibleSolution|
-      puts "Solution: #{possibleSolution}"
+      # puts "Solution: #{possibleSolution}"
       ss = scoreCombo2(possibleSolution)
       if ss == @targetPrice
         puts "WINNER WINNER CHICKEN DINNER"
@@ -70,9 +68,11 @@ class MenuChooser
     price = 0
     solution.each do |key|
       # puts "key: #{key}"
+      # puts "adding: #{@menuItems[key]}"
       price += @menuItems[key]
     end
-    price    
+    puts "#{price} for #{solution}"
+    price
   end
 
 
