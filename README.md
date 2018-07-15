@@ -1,30 +1,17 @@
 # Xkcd Menu Ordering Problem
-This is a solution for not only the specific example given here https://xkcd.com/287/, but also for the general case.
+Basically the knapsack problem. NP-Complete.
 
-To invoke the program with different sets of data, you can modify the file 
-
-Keywords: combinatorics, selection, binomial theorem, Pascal's triangle.
-
-
- all possible combos are the sum of the possible 
- combos when picking r from n where r=n, then picking r from n 
- where r=n-1, then for choosing r=n-2 from n, and so on.
- this is also a pascal triangle
-
-
-
-
-
+The most straightforward way for a human to find a solution is to methodically start by first listing all the (6) ways of choosing one appetizer, and their total costs, then list all the (21) ways of choosing two appetizers (allowing repeats), and then list all the (56) ways of choosing three appetizers, and so forth. As any combination of eight appetizers would be more than $15.05, the process need not extend beyond listing all the (1715) ways of choosing seven appetizers.
 
 
 
 
   
-  n! / r! * (n-r)! - number of combinations
+n! / r! * (n-r)! - number of combinations
   
 
 
-For Below think of r as the "length 
+For Below think of r as the "length
 of the bit string"
 
 ```
@@ -34,7 +21,7 @@ of the bit string"
   n: 3, r=0: 1
   
   8 possible combos: (each is a "key" in the hash of the actual impl)
-	1. ABC   
+	1. ABC
 	2. AB
 	3. AC
 	4. BC

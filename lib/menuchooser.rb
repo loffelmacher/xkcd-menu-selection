@@ -21,12 +21,28 @@ class MenuChooser
   
   def select()
     keys = @menuItems.keys()
-    combo = []
-    for rr in (1..keys.length)
-      combo << keys.combination(rr).to_a
+    combo = Array.new
+    puts keys.length
+    # there's no good readon to go to keys.length, if you multiply any
+    # of the item costs *7 they all exceed the target price
+    for rr in (1..7)
+      # combo << keys.combination(rr).to_a
+      # combo << keys.permutation(rr).to_a
+      # slice = keys[0..rr-1]
+      # puts "SLICE #{slice}"
+      # prod = slice.product(slice).to_a
+      # puts "The prod is: #{prod}"
+      stuffs = keys.permutation(rr).to_a
+      puts "Stuffs: #{stuffs}"
+      puts
+      puts
+      ## NOW generate the 6 arrays of length rr for each of our n items
+      combo << stuffs
     end
     combo = combo.flatten(1)
 
+    puts "Combo here: #{combo}"
+    
     combo.each do |possibleSolution|
       total = tally(possibleSolution)
       if total == @targetPrice
@@ -70,7 +86,7 @@ class MenuChooser
   end
 end
 
-# def main() 
+# def main()
 #   puts "Hello there!!!"
 #   # spec/support/examples.txt
 # end

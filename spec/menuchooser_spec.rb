@@ -1,4 +1,4 @@
-require './lib/menuchooser' 
+require './lib/menuchooser'
 
 describe MenuChooser do
 
@@ -7,7 +7,7 @@ describe MenuChooser do
 
 		expect(subject.selectedItems).to contain_exactly(
 			'mixed fruit',
-			'french fries',
+			'hot wings',
 			'hot wings',
 			'sampler plate'
 		)
