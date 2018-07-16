@@ -1,87 +1,13 @@
 # Xkcd Menu Ordering Problem
-Basically the knapsack problem. NP-Complete.
+**To run this** you can use either `rspec` or you can run as a standalone ruby 
+program with `ruby main.rb`. In both cases it uses sample data in the file 
+`spec/support/examples.txt`.
 
-The most straightforward way for a human to find a solution is to methodically start by first listing all the (6) ways of choosing one appetizer, and their total costs, then list all the (21) ways of choosing two appetizers (allowing repeats), and then list all the (56) ways of choosing three appetizers, and so forth. As any combination of eight appetizers would be more than $15.05, the process need not extend beyond listing all the (1715) ways of choosing seven appetizers.
+Basically the knapsack problem. An NP-Complete problem. Here: http://xkcd.com/287.
 
-
-
-
-  
-n! / r! * (n-r)! - number of combinations
-  
-
-
-For Below think of r as the "length
-of the bit string"
-
-```
-  n: 3, r=3: 1
-  n: 3, r=2: 3 <-- i can get all these with product i think, and rely on hash data structure? slickest
-  n: 3, r-1: 3
-  n: 3, r=0: 1
-  
-  8 possible combos: (each is a "key" in the hash of the actual impl)
-	1. ABC
-	2. AB
-	3. AC
-	4. BC
-	5. A
-	6. B
-	7. C
-	8. Choose None
-  
-  I need the SUM of that at r, r-1, r-2..r-n
-```
-
-
-
-ALL POSSIBLE COMBOS. Think of it as a string of symbols
-
-
-
-first i build up sets of cardinality 1. using product() (and slice()?)
-then i build up sets of cardinality 2
-then i build up sets of cardinality 3
-...
-
-
-ABC
-AB
-AC
-BA
-BC
-A
-B
-C
-Choose None
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The obvious way to get any one solution is to methodically list all possible 
+combinations of appetizers starting with combinations of length 1. Then 
+generate the combinations of length 2, and so on. It is quick to check a solution 
+so this is a reasonable approach to the problem. This along with the fact that 
+selecting the cheapest item 8 times would go over the target price, so we only 
+stop generating possible combinations at 7.

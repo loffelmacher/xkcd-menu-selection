@@ -17,6 +17,10 @@ class MenuChooser
     @selectedItems
   end
 
+  def totalPrice
+    @targetPrice
+  end
+
   private
   
   def select()
@@ -75,10 +79,10 @@ class MenuChooser
       lineNum = 0
       File.readlines(filePath).each do |line|
         if lineNum == 0
-          @targetPrice = line
+          @targetPrice = line.sub("$", "")
         else
           csvCells = line.strip().split(",")
-          items[csvCells[0]] = csvCells[1].strip()
+          items[csvCells[0]] = csvCells[1].strip().sub("$", "")
         end
         lineNum += 1
       end
@@ -86,8 +90,3 @@ class MenuChooser
     items
   end
 end
-
-# def main()
-#   puts "Hello there!!!"
-#   # spec/support/examples.txt
-# end
