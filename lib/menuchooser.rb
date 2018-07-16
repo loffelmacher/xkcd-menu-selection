@@ -21,59 +21,32 @@ class MenuChooser
   
   def select()
     keys = @menuItems.keys()
-    combo = Array.new
-    puts keys.length
+    combos = []
+    solved = false
 
-    # there's no good readon to go to keys.length, if you multiply any
-    # of the item costs *7 they all exceed the target price
-    for rr in (1..7) # for all sets of size rr 
-      stuffs = []
+    # solutions of length 1...to solutions of length 7
+    for rr in (1..7) 
+      sols = []
       for ss in (0..rr)
-        # puts "ss loop: #{ss}"
-        stuffs << keys.repeated_combination(ss).to_a
+        sols << keys.repeated_combination(ss).to_a
       end
 
-      # add an array of length rr for each of the 6 options
-      # for ii in (keys)
-      #   temparr = Array.new(rr,ii)
-      #   # puts "Temp array all identifical #{temparr}"
-      #   stuffs << temparr
-      # end
-
-      ## NOW generate the 6 arrays of length rr for each of our n items
-      combo << stuffs
+      combos << sols
     end
-    # puts "Combo here: #{combo}"
-    # puts ""
-    # puts ""
 
-    # combo = combo.flatten(1)
-
-    # puts "Combo NOW: #{combo}"
-    # puts ""
-    # puts ""
-
-
-    combo = combo.flatten(2)
-
-    # puts "Combo NOW: #{combo}"
-    # puts ""
-    # puts ""
-
-
-    # puts "Combo here: #{combo}"
+    combos = combos.flatten(2)
     
-    combo.each do |possibleSolution|
+    combos.each do |possibleSolution|
       total = tally(possibleSolution)
-      if possibleSolution.length() == 4
-        # puts "Sol here: #{possibleSolution} Total is: #{total}"
-      end
       if total == @targetPrice.to_f
-        # puts "YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-        puts "Choose these #{possibleSolution} to hit target price #{@targetPrice}"
+        puts "Choose these #{possibleSolution} to total #{@targetPrice}."
         @selectedItems = possibleSolution
         return @selectedItems
       end
+    end
+
+    if !solved 
+      puts "No solution found."
     end
 
     @hasSelected = true
@@ -84,14 +57,9 @@ class MenuChooser
   end
 
   def tally(solution)
-    # puts "Entering tally() solution is: #{solution}"
-    # puts ""
     price = 0
     solution.each do |key|
       item = @menuItems[key]
-      # puts "Menu items is: #{@menuItems}, Key: #{key}, Item: #{item}"
-      # puts "Key: #{key}, Item: #{item}"
-
       if @menuItems[key]
         price += @menuItems[key].to_f
       end
@@ -107,11 +75,9 @@ class MenuChooser
       lineNum = 0
       File.readlines(filePath).each do |line|
         if lineNum == 0
-          # @targetPrice = dollar_to_number(line)
           @targetPrice = line
         else
           csvCells = line.strip().split(",")
-          # items[csvCells[0]] = dollar_to_number(csvCells[1].strip())
           items[csvCells[0]] = csvCells[1].strip()
         end
         lineNum += 1
